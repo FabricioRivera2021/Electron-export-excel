@@ -12,19 +12,17 @@ select.form-control{
     margin: 0;
 }
 
-body{
-    font-family: Helvetica, Arial, sans-serif;
-}
-
 h1, h3{
-    color: Black;
+    color: black;
     text-align: center;
+    font-family: sans-serif;
+    font-weight: 200;
 }
 
 main{
     margin-top: 40px;
     padding-top: 10px;
-    background-color: grey;
+    /* background-color: grey; */
     width: 80vw;
     margin-right: 10vw;
     margin-left: auto;
@@ -85,8 +83,15 @@ main{
 .info{
     text-align: left important!;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: wheat;
+    color: black;
     padding: 20px;
+}
+
+.info-version{
+    text-align: left important!;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: black;
+    font-size: 12px;
 }
 
 #appMenu{
@@ -117,6 +122,10 @@ main{
     margin-bottom: 8px;
     color: white;
     padding: 4px;
+}
+
+span{
+    font-family: Verdana, sans-serif;
 }
 
 /* Json viewer */

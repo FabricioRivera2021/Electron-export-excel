@@ -276,7 +276,7 @@ const createWindow = () => {
 
   Menu.setApplicationMenu(menu);
 
-  win.loadFile("index.html");
+  win.loadFile("src/index.html");
 };
 
 app.getVersion();
