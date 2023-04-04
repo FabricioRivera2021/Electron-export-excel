@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <title>Exportación Correo</title>
+  </head>
+
+  <body>
+    <div class="container-md">
+      <div class="row justify-content-center my-5">
+        <h1>Formulario de no conformidad digital</h1>
+      </div>
+      <div class="row justify-content-center my-5">
+        <div class="col-md-8">
+          <form>
+            <div class="col-md-3">
+              <label for="id" class="form-label">ID</label>
+              <input type="number" name="id" id="id" class="form-control" />
+              <br />
+            </div>
+            <div>
+              <label for="date" class="form-label">Fecha de la no conformidad</label>
+              <input type="date" name="date" id="date" class="form-control" />
+              <br />
+            </div>
+            <div>
+              <label for="tipo" class="form-label">Tipo de no conformidad</label>
+              <select name="tipo" id="tipo" class="form-control form-select" aria-label="Seleccione una opcion">
+                <option value="Default">Seleccione una opcion</option>
+                <option value="op1">Medicacion mal entregada</option>
+                <option value="op2">Dosis mal entregada</option>
+                <option value="op3">Medicacion olvidada en ventanilla</option>
+              </select>
+              <br />
+            </div>
+            <div>
+              <label for="desc" class="form-label">Descripcion de lo sucedido</label>
+              <textarea class="form-control" name="desc" id="desc"></textarea>
+              <br />
+            </div>
+
+            <label for="involucrados" class="form-label">Datos del usuario</label>
+            <div class="input-group mb-3">
+              <input class="form-control" type="text" name="ci-user" placeholder="CI" />
+              <span class="input-group-text"> </span>
+              <input class="form-control" type="text" name="name-user" placeholder="Nombre" />
+              <span class="input-group-text"> </span>
+              <input class="form-control" type="text" name="cel-user" placeholder="Telefono" />
+            </div>
+
+            <label for="datos-usuario" class="form-label">Involucrados en el proceso</label>
+            <div class="input-group mb-3">
+              <input class="form-control" type="text" name="digitado" placeholder="Digitado..." />
+              <span class="input-group-text"> </span>
+              <input class="form-control" type="text" name="preparado" placeholder="Preparado..." />
+              <span class="input-group-text"> </span>
+              <input class="form-control" type="text" name="entregado" placeholder="Entregado..." />
+            </div>
+
+            <label for="realizado-por" class="form-label">Realizado por</label>
+            <input class="form-control" type="text" placeholder="Nombre" />
+            <br>
+            <div>
+              <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="./noConf.js"></script>
+  </body>
+</html>

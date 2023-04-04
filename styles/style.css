@@ -1,0 +1,138 @@
+select.form-control{
+    -webkit-appearance: menulist!important;
+    -moz-appearance: menulist!important;
+    -ms-appearance: menulist!important;
+    -o-appearance: menulist!important;
+    appearance: menulist!important;
+}
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+h1, h3{
+    color: Black;
+    text-align: center;
+}
+
+main{
+    margin-top: 40px;
+    padding-top: 10px;
+    background-color: grey;
+    width: 80vw;
+    margin-right: 10vw;
+    margin-left: auto;
+}
+
+#noConfMain{
+    margin-top: 40px;
+    padding-top: 10px;
+    background-color: grey;
+    width: 80vw;
+    margin-right: 10vw;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#mainMenu{
+    /* background-color: aqua; */
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-top: 25px;
+}
+
+#buttonsMenu{
+    /* background-color: yellowgreen; */
+    height: 200px;
+    width: fit-content;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-menu{
+    width: 178px;
+    margin: 5px;
+}
+
+.msj-ok{
+    color: greenyellow;
+}
+
+.msj-notok{
+    color: white;
+    background-color: red;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.info-warning{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    padding: 20px;
+    background-color: brown;
+}
+
+.info{
+    text-align: left important!;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: wheat;
+    padding: 20px;
+}
+
+#appMenu{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 10px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+#loadDB{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 5px;
+    border-color: beige;
+    background-color: steelblue;
+    margin-bottom: 8px;
+    color: white;
+    padding: 4px;
+}
+
+#targetFile{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-radius: 5px;
+    border-color: beige;
+    background-color: steelblue;
+    margin-bottom: 8px;
+    color: white;
+    padding: 4px;
+}
+
+/* Json viewer */
+
+table{
+    padding: 20px;
+}
+
+.cellStyle{
+    padding: 5px;
+    background-color: bisque;
+    margin-right: 3px;
+}
+
+.cellStyle2{
+    padding: 5px;
+    background-color: rgb(228, 214, 196);
+    margin-right: 3px;
+}

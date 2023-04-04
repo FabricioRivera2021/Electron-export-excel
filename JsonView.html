@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <title>Exportación Correo</title>
+  </head>
+  <body>
+    <h1>Base de datos</h1>
+    <div>
+      <div>
+        <table id="tBody">
+          <tr id="tHead">
+            <th>Documento</th>
+            <th>Nombre</th>
+            <th>Departamento</th>
+            <th>Localidad</th>
+            <th>Calle</th>
+            <th>Celular</th>
+            <th>Notas</th>
+            <th>Observaciones</th>
+          </tr>
+
+        </table>
+      </div>
+      <div id="contenedor"></div>
+    </div>
+    <script src="jsonViewer.js"></script>
+  </body>
+</html>

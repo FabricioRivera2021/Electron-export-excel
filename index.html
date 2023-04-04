@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <link rel="stylesheet" href="styles/style.css">
+    <title>Exportación Correo</title>
+  </head>
+  <body>
+    
+    <main>
+      <h1>Exportación excel a Correo</h1>
+      <div id="mainMenu">
+        <div id="aca"></div>
+        <p class="info">1. Cargar la base de datos</p>
+        <p class="info">2. Seleccione un archivo para realizar la exportacion</p>
+        <p class="info">Nota: los archivos de plantillas de correos ya procesados seran usados para crear la base de datos, para cargar estos archivos los mismos deben estar colocados en una MISMA CARPETA, al cargar la base de datos el programa le pedira el directorio donde sea que se encuentren.</p>
+        <!-- <div id="appMenu">
+            <button id="loadDB">Cargar Base de datos</button>
+            <button id="targetFile">Nuevo archivo</button>
+        </div> -->
+      </div>
+      <p id="info"></p>
+      App version: <span>1.0.0</span> - 
+      Base de datos: <span id="DB"></span>.
+    </main>
+    
+    <script src="./render.js"></script>
+</body>
+</html>

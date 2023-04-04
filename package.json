@@ -1,0 +1,29 @@
+{
+  "name": "correoexcell",
+  "version": "1.0.0",
+  "description": "Aplicacion para migrar de excel a plantilla correo",
+  "main": "main.js",
+  "scripts": {
+    "test": "testCorreo",
+    "dev": "electron .",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "author": "Fabricio",
+  "license": "ISC",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.5",
+    "@electron-forge/maker-deb": "^6.0.5",
+    "@electron-forge/maker-rpm": "^6.0.5",
+    "@electron-forge/maker-squirrel": "^6.0.5",
+    "@electron-forge/maker-zip": "^6.0.5",
+    "electron": "^23.1.4"
+  },
+  "dependencies": {
+    "electron-pdf": "^20.0.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "lodash": "^4.17.21",
+    "xlsx": "^0.18.5"
+  }
+}
