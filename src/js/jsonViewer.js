@@ -1,53 +1,69 @@
+const contenedor = document.querySelector("#contenedor");
+const tRow = document.querySelector("#tRow");
 
-const contenedor = document.querySelector('#contenedor');
-const tRow = document.querySelector('#tRow')
-const table = document.querySelector('#tBody');
+window.versions.readJson(async (data) => {
+  const elementsPerPage = 10;
+  const totalPages = Math.ceil(data.length / elementsPerPage);
+  let currentPage = 1;
 
-window.versions.readJson((data) => {
-    // data.map((elem) => {
-    //     console.log(JSON.stringify(elem));
-    // })
-    
-    
-    for (let i = 0; i < 10; i++) {        
-        const row = table.insertRow(-1)
-        
-        const cell0 = row.insertCell(0);
-        const cell1 = row.insertCell(1);
-        const cell2 = row.insertCell(2);
-        const cell3 = row.insertCell(3);
-        const cell4 = row.insertCell(4);
-        const cell5 = row.insertCell(5);
-        const cell6 = row.insertCell(6);
-        const cell7 = row.insertCell(7);
-    
-        cell0.innerHTML = data[i]['Numero de Documento'];
-        cell1.innerHTML = data[i]['Nombre Destinatario']; //Nombre
-        cell2.innerHTML = data[i]['Departamento']; //Depto
-        cell3.innerHTML = data[i]['Localidad/Barrio']; //Localidad
-        cell4.innerHTML = data[i]['Calle'] //calle
-        cell5.innerHTML = data[i]['Celular']; //Celular
-        cell6.innerHTML = data[i]['Notas']; //notas
-        cell7.innerHTML = data[i]['Observaciones']; //observaciones
-    
-        if( i % 2 == 0){
-            cell0.className = 'cellStyle';
-            cell1.className = 'cellStyle';
-            cell2.className = 'cellStyle';
-            cell3.className = 'cellStyle';
-            cell4.className = 'cellStyle';
-            cell5.className = 'cellStyle';
-            cell6.className = 'cellStyle';
-            cell7.className = 'cellStyle';
-        }else{
-            cell0.className = 'cellStyle2';
-            cell1.className = 'cellStyle2';
-            cell2.className = 'cellStyle2';
-            cell3.className = 'cellStyle2';
-            cell4.className = 'cellStyle2';
-            cell5.className = 'cellStyle2';
-            cell6.className = 'cellStyle2';
-            cell7.className = 'cellStyle2';
-        }
+  const renderTable = (start, end) => {
+    //agregar para que no se pueda borrar el header
+    const table = document.querySelector("#tBody");
+    table.innerHTML = `
+                 <tr id="tHeader">
+                    <th scope="col" class="table-light">Documento</th>
+                    <th scope="col" class="table-light">Nombre</th>
+                    <th scope="col" class="table-light">Departamento</th>
+                    <th scope="col" class="table-light">Localidad</th>
+                    <th scope="col" class="table-light">Calle</th>
+                    <th scope="col" class="table-light">Celular</th>
+                    <th scope="col" class="table-light">Notas</th>
+                    <th scope="col" class="table-light">Observaciones</th>
+                    <th scope="col" class="table-light">Editar</th>
+                 </tr>`;
+
+    for (let i = start; i < end; i++) {
+      let row = `<tr>
+                    <td scope="row">${data[i]["Numero de Documento"]}</td>
+                    <td scope="row">${data[i]["Nombre Destinatario"]}</td>
+                    <td scope="row">${data[i]["Departamento"]}</td>
+                    <td scope="row">${data[i]["Localidad/Barrio"]}</td>
+                    <td scope="row">${data[i]["Calle"]}</td>
+                    <td scope="row">${data[i]["Celular"]}</td>
+                    <td scope="row">${data[i]["Notas"]}</td>
+                    <td scope="row">${data[i]["Observaciones"]}</td>
+                    <td scope="row"><button class="editBtn btn btn-primary" id="${i}">Editar</button></td>
+                 </tr>`;
+      table.innerHTML += row;
     }
-}) 
+    //await new Promise((resolve) => setTimeout(resolve, 1));
+    const botonesEdicion = document.querySelectorAll('.editBtn');
+    botonesEdicion.forEach((elem) => {
+      elem.addEventListener('click', (e) => {
+        const target = e.currentTarget.id;
+        const user = data[target];
+        
+        window.versions.editUser(user)
+      })
+    })
+  };
+
+  const renderPageButtons = () => {
+    const pageButtonsContainer = document.querySelector("#pageButtonsContainer");
+    pageButtonsContainer.innerHTML = "";
+    for (let i = 1; i <= totalPages; i++) {
+      const button = document.createElement("button");
+      button.textContent = i;
+      button.addEventListener("click", () => {
+        currentPage = i;
+        const start = (currentPage - 1) * elementsPerPage;
+        const end = currentPage * elementsPerPage;
+        renderTable(start, end);
+      });
+      pageButtonsContainer.appendChild(button);
+    }
+  };
+
+  renderPageButtons();
+  renderTable(0, elementsPerPage);
+});

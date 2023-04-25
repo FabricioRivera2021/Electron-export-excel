@@ -5,29 +5,41 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
-    <link rel="stylesheet" href="styles/style.css" />
-    <title>Exportación Correo</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css" />
+    <title>Base de datos</title>
   </head>
   <body>
-    <h1>Base de datos</h1>
+    <br />
+    <div class="px-5">
+      <form class="p-10px" action="">
+        <p>Buscar registro</p>
+        <div class="input-group mb-3">
+          <label class="form-label" for="Buscador"></label>
+            <input class="form-control" type="text" name="buscador" placeholder="Nombre, CI" />
+            <input class="btn btn-primary" type="submit" value="Buscar" />
+        </div>
+      </form>
+    </div>
     <div>
-      <div>
-        <table id="tBody">
-          <tr id="tHead">
-            <th>Documento</th>
-            <th>Nombre</th>
-            <th>Departamento</th>
-            <th>Localidad</th>
-            <th>Calle</th>
-            <th>Celular</th>
-            <th>Notas</th>
-            <th>Observaciones</th>
+      <div class="tableContainer">
+        <table class="table table-dark table-triped" id="tBody">
+          <tr id="tHeader">
+            <th scope="col" class="table-light">Documento</th>
+            <th scope="col" class="table-light">Nombre</th>
+            <th scope="col" class="table-light">Departamento</th>
+            <th scope="col" class="table-light">Localidad</th>
+            <th scope="col" class="table-light">Calle</th>
+            <th scope="col" class="table-light">Celular</th>
+            <th scope="col" class="table-light">Notas</th>
+            <th scope="col" class="table-light">Observaciones</th>
+            <th scope="col" class="table-light">Editar</th>
           </tr>
-
         </table>
       </div>
+      <div id="pageButtonsContainer"></div>
       <div id="contenedor"></div>
     </div>
-    <script src="jsonViewer.js"></script>
+    <script src="../js/jsonViewer.js"></script>
   </body>
 </html>

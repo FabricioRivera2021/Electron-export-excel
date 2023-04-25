@@ -216,26 +216,24 @@ const createWindow = () => {
       label: "Archivos de datos",
       submenu: [
         {
-          label: "RAW json",
+          label: "Base de datos",
           click: () => {
             const jsonViewer = new BrowserWindow({
-              width: 900,
+              width: 1400,
               height: 550,
+              autoHideMenuBar: true,
               webPreferences: {
                 preload: path.join(__dirname, "preload.js"),
               },
             });
 
-            const OKdatajson = JSON.parse(fs.readFileSync("./resources/app/Database/OKdatajson.json", "utf8"));
+            const OKdatajson = JSON.parse(fs.readFileSync("./Database/OKdatajson.json", "utf8"));
             
-            jsonViewer.loadFile("JsonView.html");
-            jsonViewer.on('ready-to-show', jsonViewer.show);
-            jsonViewer.webContents.openDevTools();
+            jsonViewer.loadFile("./src/pages/JsonView.html");
             jsonViewer.webContents.send("onReadJson", OKdatajson);
+            jsonViewer.webContents.openDevTools();
+            jsonViewer.on('ready-to-show', jsonViewer.show);
           },
-        },
-        {
-          label: "json filtrado",
         },
       ],
     },
@@ -254,7 +252,7 @@ const createWindow = () => {
               },
             });
 
-            noConfViewer.loadFile("noConformidad.html");
+            noConfViewer.loadFile("./src/pages/noConformidad.html");
           },
         },
         {
@@ -298,7 +296,29 @@ app.whenReady().then(() => {
       },
     });
 
-    saveNoConfViewer.loadFile("saveNoConf.html");
+    saveNoConfViewer.loadFile("./src/pages/saveNoConf.html");
+  })
+
+  ipcMain.on('setEditUser', (event, args) => {
+    const user = args;
+
+    const jsonViewer = BrowserWindow.getFocusedWindow();
+
+    const editUser = new BrowserWindow({
+      parent: jsonViewer,
+      modal: true,
+      width: 800,
+      height: 720,
+      webPreferences: {
+        preload: path.join(__dirname, "preload.js"),
+      },
+    });
+    
+    editUser.loadFile("./src/pages/editUser.html");
+    editUser.webContents.send("onEditUser", user);
+    editUser.webContents.openDevTools();
+    editUser.setMenu(null)
+    editUser.on('ready-to-show', editUser.show)
   })
 
   app.on("activate", () => {

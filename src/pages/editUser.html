@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css" />
+    <title>Base de datos</title>
+  </head>
+  <body>
+    <h1>Hola mundo</h1>
+    <div class="row justify-content-center my-5">
+      <div class="col-md-10">
+        <form id="editForm" action="">
+          <label class="form-label" for="ci">Documento</label>
+          <input class="form-control" type="text" name="ci" id="ci" />
+          <label class="form-label" for="nombre">Nombre</label>
+          <input class="form-control" type="text" name="nombre" id="nombre" />
+          <label class="form-label" for="depto">Departamento</label>
+          <input class="form-control" type="text" name="depto" id="depto" />
+          <label class="form-label" for="loc/barr">Localidad/Barrio</label>
+          <input class="form-control" type="text" name="loc/barr" id="locBarr" />
+          <label class="form-label" for="calle">Calle</label>
+          <input class="form-control" type="text" name="calle" id="calle"/>
+          <label class="form-label" for="cel">Celular</label>
+          <input class="form-control" type="text" name="cel" id="cel"/>
+          <label class="form-label" for="observaciones">Observaciones</label>
+          <input class="form-control" type="text" name="observaciones" id="obs"/>
+        </form>
+      </div>
+    </div>
+    <script src="../js/editUser.js"></script>
+  </body>
+</html>
+
+<!-- <td scope="row">${data[i]["Numero de Documento"]}</td>
+<td scope="row">${data[i]["Nombre Destinatario"]}</td>
+<td scope="row">${data[i]["Departamento"]}</td>
+<td scope="row">${data[i]["Localidad/Barrio"]}</td>
+<td scope="row">${data[i]["Calle"]}</td>
+<td scope="row">${data[i]["Celular"]}</td>
+<td scope="row">${data[i]["Notas"]}</td>
+<td scope="row">${data[i]["Observaciones"]}</td> -->
