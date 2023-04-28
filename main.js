@@ -221,18 +221,20 @@ const createWindow = () => {
             const jsonViewer = new BrowserWindow({
               width: 1400,
               height: 550,
-              autoHideMenuBar: true,
+              show: false,
               webPreferences: {
                 preload: path.join(__dirname, "preload.js"),
               },
             });
 
             const OKdatajson = JSON.parse(fs.readFileSync("./Database/OKdatajson.json", "utf8"));
-            
-            jsonViewer.loadFile("./src/pages/JsonView.html");
-            jsonViewer.webContents.send("onReadJson", OKdatajson);
-            jsonViewer.webContents.openDevTools();
-            jsonViewer.on('ready-to-show', jsonViewer.show);
+            if(OKdatajson){
+              jsonViewer.loadFile("./src/pages/JsonView.html");
+              jsonViewer.maximize(true);
+              jsonViewer.webContents.send("onReadJson", OKdatajson);
+              //jsonViewer.webContents.openDevTools();
+              jsonViewer.on("ready-to-show", jsonViewer.show);
+            }
           },
         },
       ],
@@ -279,12 +281,11 @@ const createWindow = () => {
 
 app.getVersion();
 
-
 app.whenReady().then(() => {
   createWindow();
 
-  ipcMain.on('setSaveNoConf', (event, args) => {
-    const json = JSON.parse(args)
+  ipcMain.on("setSaveNoConf", (event, args) => {
+    const json = JSON.parse(args);
     console.log(json);
 
     const saveNoConfViewer = new BrowserWindow({
@@ -297,29 +298,53 @@ app.whenReady().then(() => {
     });
 
     saveNoConfViewer.loadFile("./src/pages/saveNoConf.html");
-  })
+  });
 
-  ipcMain.on('setEditUser', (event, args) => {
+  ipcMain.on("setEditUser", (event, targetID, args) => {
     const user = args;
+    const userID = targetID;
 
     const jsonViewer = BrowserWindow.getFocusedWindow();
 
     const editUser = new BrowserWindow({
       parent: jsonViewer,
       modal: true,
-      width: 800,
+      show: false,
+      width: 900,
       height: 720,
       webPreferences: {
         preload: path.join(__dirname, "preload.js"),
       },
     });
-    
+
+    console.log(user);
     editUser.loadFile("./src/pages/editUser.html");
-    editUser.webContents.send("onEditUser", user);
+    editUser.webContents.send("onEditUser", user, userID);
     editUser.webContents.openDevTools();
-    editUser.setMenu(null)
-    editUser.on('ready-to-show', editUser.show)
-  })
+    editUser.setMenu(null);
+    editUser.on("ready-to-show", editUser.show);
+  });
+
+  ipcMain.on("update-user", (event, args) => {
+    const OKdatajson = JSON.parse(fs.readFileSync("./Database/OKdatajson.json", "utf8"));
+    /* Solo necesitamos encontrar el registro que tenga el mismo id en ambos casos.. */
+    const user = OKdatajson[args.id];
+
+    // Modify the email property
+    user['Numero de Documento'] = args.ci
+    user['Nombre Destinatario'] = args.nombre
+    user['Departamento'] = args.depto
+    user['Localidad/Barrio'] = args['loc/barr']
+    user['Calle'] = args.calle
+    user['Celular'] = args.cel
+    user['Observaciones'] = args.observaciones
+
+    //console.log(args);
+    // Save the changes back to the JSON file
+    fs.writeFileSync("./Database/OKdatajson.json", JSON.stringify(OKdatajson));
+
+    event.reply('update-user-reply', { status: 'success', message: 'User updated successfully' });
+  });
 
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {

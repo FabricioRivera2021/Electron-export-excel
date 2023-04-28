@@ -42,8 +42,7 @@ window.versions.readJson(async (data) => {
       elem.addEventListener('click', (e) => {
         const target = e.currentTarget.id;
         const user = data[target];
-        
-        window.versions.editUser(user)
+        window.versions.editUser(target, user)
       })
     })
   };

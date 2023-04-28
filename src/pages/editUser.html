@@ -11,23 +11,47 @@
   </head>
   <body>
     <h1>Hola mundo</h1>
-    <div class="row justify-content-center my-5">
+    <div class="row justify-content-center my-5 g-0">
       <div class="col-md-10">
         <form id="editForm" action="">
-          <label class="form-label" for="ci">Documento</label>
-          <input class="form-control" type="text" name="ci" id="ci" />
-          <label class="form-label" for="nombre">Nombre</label>
-          <input class="form-control" type="text" name="nombre" id="nombre" />
-          <label class="form-label" for="depto">Departamento</label>
-          <input class="form-control" type="text" name="depto" id="depto" />
-          <label class="form-label" for="loc/barr">Localidad/Barrio</label>
-          <input class="form-control" type="text" name="loc/barr" id="locBarr" />
-          <label class="form-label" for="calle">Calle</label>
-          <input class="form-control" type="text" name="calle" id="calle"/>
-          <label class="form-label" for="cel">Celular</label>
-          <input class="form-control" type="text" name="cel" id="cel"/>
-          <label class="form-label" for="observaciones">Observaciones</label>
-          <input class="form-control" type="text" name="observaciones" id="obs"/>
+            <input type="hidden" name="id" id="id">
+          <div class="input-group mb-6">
+            <label class="form-label" for="ci"></label>
+            <span class="input-group-text">Nro. documento </span>
+            <input class="form-control" type="text" name="ci" id="ci" />
+          </div>
+          <div class="input-group mb-6">
+            <label class="form-label" for="nombre"></label>
+            <span class="input-group-text">Nombre destinatario </span>
+            <input class="form-control" type="text" name="nombre" id="nombre" />
+          </div>
+          <div class="input-group mb-6">
+            <label class="form-label" for="depto"></label>
+            <span class="input-group-text">Departamento </span>
+            <input class="form-control" type="text" name="depto" id="depto" />
+          </div>
+          <div class="input-group mb-6">
+            <label class="form-label" for="loc/barr"></label>
+            <span class="input-group-text">Localidad/Barrio </span>
+            <input class="form-control" type="text" name="loc/barr" id="locBarr" />
+          </div>
+          <div class="input-group mb-6">
+            <label class="form-label" for="calle"></label>
+            <span class="input-group-text">Calle </span>
+            <input class="form-control" type="text" name="calle" id="calle" />
+          </div>
+          <div class="input-group mb-6">
+            <label class="form-label" for="cel"></label>
+            <span class="input-group-text">Celular </span>
+            <input class="form-control" type="text" name="cel" id="cel" />
+          </div>
+          <div class="input-group mb-6">
+            <label class="form-label" for="observaciones"></label>
+            <span class="input-group-text">Observaciones </span>
+            <input class="form-control" type="text" name="observaciones" id="obs" />
+          </div>
+
+          <input type="submit" value="Guardar" />
         </form>
       </div>
     </div>
