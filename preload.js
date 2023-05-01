@@ -1,21 +1,42 @@
+const { contextBridge, ipcRenderer } = require("electron");
 
-const { contextBridge, ipcRenderer } = require('electron')
+contextBridge.exposeInMainWorld("versions", {
+  ping: () => ipcRenderer.invoke("ping"),
 
-contextBridge.exposeInMainWorld('versions', {
+  readJson: (callback) =>
+    ipcRenderer.on("onReadJson", async (event, args) => {
+      await callback(args);
+    }),
 
-  ping: () => ipcRenderer.invoke('ping'),
+  saveNoConf: (callback) => ipcRenderer.send("setSaveNoConf", callback),
 
-  readJson: (callback) => ipcRenderer.on('onReadJson', async(event, args) => {
-    await callback(args);
-  }),
+  editUser: (targetID, callback) => ipcRenderer.send("setEditUser", targetID, callback),
 
-  saveNoConf: (callback) => ipcRenderer.send('setSaveNoConf', callback),
+  onEditUser: (callback) =>
+    ipcRenderer.on("onEditUser", async (event, args, targetID) => {
+      await callback(args, targetID);
+    }),
 
-  editUser: (targetID, callback) => ipcRenderer.send('setEditUser', targetID, callback),
+  searchUser: async (user) => {
+    const searchUserPromise = new Promise((resolve, reject) => {
+      ipcRenderer.send("search-user", user);
+      ipcRenderer.on("search-user-reply", (event, arg) => {
+        if (arg.status === "success") {
+          resolve(arg.message);
+        } else {
+          reject(arg.message);
+        }
+      });
+    });
 
-  onEditUser: (callback) => ipcRenderer.on('onEditUser', async(event, args, targetID) => {
-    await callback(args, targetID);
-  }),
+    try {
+      const message = await searchUserPromise;
+      console.log(message);
+      return message;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 
   submitForm: async (formElem) => {
     const form = new FormData(formElem);
@@ -23,9 +44,9 @@ contextBridge.exposeInMainWorld('versions', {
     console.log(objForm);
 
     const updateUserPromise = new Promise((resolve, reject) => {
-      ipcRenderer.send('update-user', objForm);
-      ipcRenderer.on('update-user-reply', (event, arg) => {
-        if (arg.status === 'success') {
+      ipcRenderer.send("update-user", objForm);
+      ipcRenderer.on("update-user-reply", (event, arg) => {
+        if (arg.status === "success") {
           resolve(arg.message);
         } else {
           reject(arg.message);
@@ -40,7 +61,7 @@ contextBridge.exposeInMainWorld('versions', {
       console.error(error);
     }
   },
-})
+});
 
 //ipcrender.send del render al main
 //ipcrender.on del main al render

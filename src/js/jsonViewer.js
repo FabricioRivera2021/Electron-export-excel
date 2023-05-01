@@ -1,5 +1,41 @@
 const contenedor = document.querySelector("#contenedor");
 const tRow = document.querySelector("#tRow");
+const searchForm = document.querySelector("#searchForm");
+
+searchForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const searchValue = e.currentTarget.buscador.value;
+
+  window.versions.searchUser(searchValue).then((data) => {
+      const table = document.querySelector("#tBody");
+      table.innerHTML = `
+                   <tr id="tHeader">
+                      <th scope="col" class="table-light">Documento</th>
+                      <th scope="col" class="table-light">Nombre</th>
+                      <th scope="col" class="table-light">Departamento</th>
+                      <th scope="col" class="table-light">Localidad</th>
+                      <th scope="col" class="table-light">Calle</th>
+                      <th scope="col" class="table-light">Celular</th>
+                      <th scope="col" class="table-light">Notas</th>
+                      <th scope="col" class="table-light">Observaciones</th>
+                      <th scope="col" class="table-light">Editar</th>
+                   </tr>`;
+    
+        let row = `<tr>
+                      <td scope="row">${data[0]["Numero de Documento"]}</td>
+                      <td scope="row">${data[0]["Nombre Destinatario"]}</td>
+                      <td scope="row">${data[0]["Departamento"]}</td>
+                      <td scope="row">${data[0]["Localidad/Barrio"]}</td>
+                      <td scope="row">${data[0]["Calle"]}</td>
+                      <td scope="row">${data[0]["Celular"]}</td>
+                      <td scope="row">${data[0]["Notas"]}</td>
+                      <td scope="row">${data[0]["Observaciones"]}</td>
+                      <td scope="row"><button class="editBtn btn btn-primary" id="${0}">Editar</button></td>
+                   </tr>`;
+        table.innerHTML += row;
+  });
+  
+});
 
 window.versions.readJson(async (data) => {
   const elementsPerPage = 10;
@@ -37,14 +73,14 @@ window.versions.readJson(async (data) => {
       table.innerHTML += row;
     }
     //await new Promise((resolve) => setTimeout(resolve, 1));
-    const botonesEdicion = document.querySelectorAll('.editBtn');
+    const botonesEdicion = document.querySelectorAll(".editBtn");
     botonesEdicion.forEach((elem) => {
-      elem.addEventListener('click', (e) => {
+      elem.addEventListener("click", (e) => {
         const target = e.currentTarget.id;
         const user = data[target];
-        window.versions.editUser(target, user)
-      })
-    })
+        window.versions.editUser(target, user);
+      });
+    });
   };
 
   const renderPageButtons = () => {

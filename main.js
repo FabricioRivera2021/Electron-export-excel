@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, dialog, shell, ipcMain } = require("electron");
+const { app, BrowserWindow, Menu, dialog, shell, ipcMain, webContents } = require("electron");
 const path = require("path");
 const xlsx = require("xlsx");
 const fs = require("fs");
@@ -228,11 +228,11 @@ const createWindow = () => {
             });
 
             const OKdatajson = JSON.parse(fs.readFileSync("./Database/OKdatajson.json", "utf8"));
-            if(OKdatajson){
+            if (OKdatajson) {
               jsonViewer.loadFile("./src/pages/JsonView.html");
               jsonViewer.maximize(true);
               jsonViewer.webContents.send("onReadJson", OKdatajson);
-              //jsonViewer.webContents.openDevTools();
+              jsonViewer.webContents.openDevTools();
               jsonViewer.on("ready-to-show", jsonViewer.show);
             }
           },
@@ -331,19 +331,33 @@ app.whenReady().then(() => {
     const user = OKdatajson[args.id];
 
     // Modify the email property
-    user['Numero de Documento'] = args.ci
-    user['Nombre Destinatario'] = args.nombre
-    user['Departamento'] = args.depto
-    user['Localidad/Barrio'] = args['loc/barr']
-    user['Calle'] = args.calle
-    user['Celular'] = args.cel
-    user['Observaciones'] = args.observaciones
+    user["Numero de Documento"] = args.ci;
+    user["Nombre Destinatario"] = args.nombre;
+    user["Departamento"] = args.depto;
+    user["Localidad/Barrio"] = args["loc/barr"];
+    user["Calle"] = args.calle;
+    user["Celular"] = args.cel;
+    user["Observaciones"] = args.observaciones;
 
     //console.log(args);
     // Save the changes back to the JSON file
     fs.writeFileSync("./Database/OKdatajson.json", JSON.stringify(OKdatajson));
 
-    event.reply('update-user-reply', { status: 'success', message: 'User updated successfully' });
+    event.reply("update-user-reply", { status: "success", message: "User updated successfully" });
+  });
+
+  ipcMain.on("search-user", (event, user) => {
+    const OKdatajson = JSON.parse(fs.readFileSync("./Database/OKdatajson.json", "utf8"));
+    const searchUser = user;
+
+    const results = _.filter(OKdatajson, (item) => {
+      const nameMatch = item['Nombre Destinatario'].toLowerCase().includes(searchUser.toLowerCase());
+      const idMatch = item['Numero de Documento'].toString().includes(searchUser);
+      return nameMatch || idMatch;
+    });
+
+    console.log(results);
+    event.reply("search-user-reply", { status: "success", message: results });    
   });
 
   app.on("activate", () => {
