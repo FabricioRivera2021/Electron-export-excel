@@ -34,7 +34,7 @@ contextBridge.exposeInMainWorld("versions", {
       console.log(message);
       return message;
     } catch (error) {
-      console.error(error);
+      console.error("hubo un error: ", error);
     }
   },
 

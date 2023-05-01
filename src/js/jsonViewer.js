@@ -7,34 +7,78 @@ searchForm.addEventListener("submit", (e) => {
   const searchValue = e.currentTarget.buscador.value;
 
   window.versions.searchUser(searchValue).then((data) => {
+    const elementsPerPage = 10;
+    const totalPages = Math.ceil(data.length / elementsPerPage);
+    let currentPage = 1;
+
+    console.log('Esta es la data que llega', data[0])
+
+    const renderTable = (end, lessThan10 = false, length) => {
+      //agregar para que no se pueda borrar el header
+      if(lessThan10 === true){
+        end = length;
+      }
       const table = document.querySelector("#tBody");
       table.innerHTML = `
-                   <tr id="tHeader">
-                      <th scope="col" class="table-light">Documento</th>
-                      <th scope="col" class="table-light">Nombre</th>
-                      <th scope="col" class="table-light">Departamento</th>
-                      <th scope="col" class="table-light">Localidad</th>
-                      <th scope="col" class="table-light">Calle</th>
-                      <th scope="col" class="table-light">Celular</th>
-                      <th scope="col" class="table-light">Notas</th>
-                      <th scope="col" class="table-light">Observaciones</th>
-                      <th scope="col" class="table-light">Editar</th>
-                   </tr>`;
-    
+                     <tr id="tHeader">
+                        <th scope="col" class="table-light">Documento</th>
+                        <th scope="col" class="table-light">Nombre</th>
+                        <th scope="col" class="table-light">Departamento</th>
+                        <th scope="col" class="table-light">Localidad</th>
+                        <th scope="col" class="table-light">Calle</th>
+                        <th scope="col" class="table-light">Celular</th>
+                        <th scope="col" class="table-light">Notas</th>
+                        <th scope="col" class="table-light">Observaciones</th>
+                        <th scope="col" class="table-light">Editar</th>
+                     </tr>`;
+
+      for (let i = 0; i < end; i++) {
         let row = `<tr>
-                      <td scope="row">${data[0]["Numero de Documento"]}</td>
-                      <td scope="row">${data[0]["Nombre Destinatario"]}</td>
-                      <td scope="row">${data[0]["Departamento"]}</td>
-                      <td scope="row">${data[0]["Localidad/Barrio"]}</td>
-                      <td scope="row">${data[0]["Calle"]}</td>
-                      <td scope="row">${data[0]["Celular"]}</td>
-                      <td scope="row">${data[0]["Notas"]}</td>
-                      <td scope="row">${data[0]["Observaciones"]}</td>
-                      <td scope="row"><button class="editBtn btn btn-primary" id="${0}">Editar</button></td>
-                   </tr>`;
+                        <td scope="row">${data[i]["Numero de Documento"]}</td>
+                        <td scope="row">${data[i]["Nombre Destinatario"]}</td>
+                        <td scope="row">${data[i]["Departamento"]}</td>
+                        <td scope="row">${data[i]["Localidad/Barrio"]}</td>
+                        <td scope="row">${data[i]["Calle"]}</td>
+                        <td scope="row">${data[i]["Celular"]}</td>
+                        <td scope="row">${data[i]["Notas"]}</td>
+                        <td scope="row">${data[i]["Observaciones"]}</td>
+                        <td scope="row"><button class="editBtn btn btn-primary" id="${i}">Editar</button></td>
+                     </tr>`;
         table.innerHTML += row;
-  });
+      }
+      //await new Promise((resolve) => setTimeout(resolve, 1));
+      const botonesEdicion = document.querySelectorAll(".editBtn");
+      botonesEdicion.forEach((elem) => {
+        elem.addEventListener("click", (e) => {
+          const target = e.currentTarget.id;
+          const user = data[target];
+          window.versions.editUser(target, user);
+        });
+      });
+    };
+
+    const renderPageButtons = () => {
+      const pageButtonsContainer = document.querySelector("#pageButtonsContainer");
+      pageButtonsContainer.innerHTML = "";
+      if(totalPages > 1){
+        for (let i = 1; i <= totalPages; i++) {
+          const button = document.createElement("button");
+          button.textContent = i;
+          button.addEventListener("click", () => {
+            currentPage = i;
+            const start = (currentPage - 1) * elementsPerPage;
+            const end = currentPage * elementsPerPage;
+            renderTable(start, end);
+          });
+          pageButtonsContainer.appendChild(button);
+        }
+      }
+    };
   
+    renderPageButtons();
+    data.length < 10 ? renderTable(elementsPerPage, true, data.length) : renderTable(elementsPerPage); 
+
+  });
 });
 
 window.versions.readJson(async (data) => {
