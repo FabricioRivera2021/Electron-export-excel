@@ -13,7 +13,7 @@ searchForm.addEventListener("submit", (e) => {
 
     console.log('Esta es la data que llega', data[0])
 
-    const renderTable = (end, lessThan10 = false, length) => {
+    const renderTable = (start, end, lessThan10 = false, length) => {
       //agregar para que no se pueda borrar el header
       if(lessThan10 === true){
         end = length;
@@ -52,7 +52,9 @@ searchForm.addEventListener("submit", (e) => {
         elem.addEventListener("click", (e) => {
           const target = e.currentTarget.id;
           const user = data[target];
-          window.versions.editUser(target, user);
+          const userID = user.id;
+          // console.log(userID);
+          window.versions.editUser(userID, user);
         });
       });
     };
@@ -76,7 +78,7 @@ searchForm.addEventListener("submit", (e) => {
     };
   
     renderPageButtons();
-    data.length < 10 ? renderTable(elementsPerPage, true, data.length) : renderTable(elementsPerPage); 
+    data.length < 10 ? renderTable(0, elementsPerPage, true, data.length) : renderTable(0, elementsPerPage); 
 
   });
 });
@@ -122,7 +124,9 @@ window.versions.readJson(async (data) => {
       elem.addEventListener("click", (e) => {
         const target = e.currentTarget.id;
         const user = data[target];
-        window.versions.editUser(target, user);
+        const userID = user.id;
+        // console.log(userID);
+        window.versions.editUser(userID, user);
       });
     });
   };

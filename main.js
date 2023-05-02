@@ -55,6 +55,7 @@ const createDatabase = (directorio) => {
     const jsonData = JSON.parse(fs.readFileSync("./Database/RAWdatajson.json", "utf8"));
 
     const unique = [];
+    let id = 0;
     for (const item of jsonData) {
       const isDuplicate = unique.find((obj) => obj["Numero de Documento"] === item["Numero de Documento"]);
       if (!isDuplicate) {
@@ -63,6 +64,8 @@ const createDatabase = (directorio) => {
             item[elem] = item[elem].trim();
           }
         });
+        item.id = id;
+        id ++;
         unique.push(item);
       }
       if (isNumber(item.Celular)) {

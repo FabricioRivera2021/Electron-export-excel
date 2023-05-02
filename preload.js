@@ -10,11 +10,11 @@ contextBridge.exposeInMainWorld("versions", {
 
   saveNoConf: (callback) => ipcRenderer.send("setSaveNoConf", callback),
 
-  editUser: (targetID, callback) => ipcRenderer.send("setEditUser", targetID, callback),
+  editUser: (userID, callback) => ipcRenderer.send("setEditUser", userID, callback),
 
   onEditUser: (callback) =>
-    ipcRenderer.on("onEditUser", async (event, args, targetID) => {
-      await callback(args, targetID);
+    ipcRenderer.on("onEditUser", async (event, args, userID) => {
+      await callback(args, userID);
     }),
 
   searchUser: async (user) => {
